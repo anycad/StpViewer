@@ -33,6 +33,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openIGESToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -56,9 +57,9 @@
             // treeViewStp
             // 
             this.treeViewStp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeViewStp.Location = new System.Drawing.Point(0, 24);
+            this.treeViewStp.Location = new System.Drawing.Point(0, 25);
             this.treeViewStp.Name = "treeViewStp";
-            this.treeViewStp.Size = new System.Drawing.Size(239, 470);
+            this.treeViewStp.Size = new System.Drawing.Size(239, 469);
             this.treeViewStp.TabIndex = 0;
             this.treeViewStp.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewStp_AfterSelect);
             // 
@@ -68,24 +69,32 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(239, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(239, 25);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem});
+            this.openToolStripMenuItem,
+            this.openIGESToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(39, 21);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Text = "Open STEP";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // openIGESToolStripMenuItem
+            // 
+            this.openIGESToolStripMenuItem.Name = "openIGESToolStripMenuItem";
+            this.openIGESToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openIGESToolStripMenuItem.Text = "Open IGES";
+            this.openIGESToolStripMenuItem.Click += new System.EventHandler(this.openIGESToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -115,6 +124,7 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openIGESToolStripMenuItem;
     }
 }
 

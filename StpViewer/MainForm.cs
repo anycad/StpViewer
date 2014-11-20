@@ -38,7 +38,7 @@ namespace StpViewer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.renderView.View3d.ShowCoordinateAxis(true);
+            this.renderView.ShowCoordinateAxis(true);
             renderView.ExecuteCommand("ShadeWithEdgeMode");
             this.renderView.RequestDraw();
         }
@@ -53,16 +53,35 @@ namespace StpViewer
                 this.treeViewStp.Nodes.Clear();
                 this.renderView.ClearScene();
 
-                StpBrower browser = new StpBrower(this.treeViewStp, this.renderView);
-                browser.ReadFile(dlg.FileName);
+                CADBrower browser = new CADBrower(this.treeViewStp, this.renderView);
+                AnyCAD.Exchange.StepReader reader = new AnyCAD.Exchange.StepReader();
+                reader.Read(dlg.FileName, browser);
             }
 
-            renderView.View3d.FitAll();
+            renderView.FitAll();
         }
 
         private void treeViewStp_AfterSelect(object sender, TreeViewEventArgs e)
         {
            
+        }
+
+        private void openIGESToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "STEP File(*.stp;*.step)|*.stp;*.step|All Files(*.*)|*.*";
+
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                this.treeViewStp.Nodes.Clear();
+                this.renderView.ClearScene();
+
+                CADBrower browser = new CADBrower(this.treeViewStp, this.renderView);
+                AnyCAD.Exchange.IgesReader reader = new AnyCAD.Exchange.IgesReader();
+                reader.Read(dlg.FileName, browser);
+            }
+
+            renderView.View3d.FitAll();
         }
     }
 

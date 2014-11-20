@@ -7,23 +7,35 @@ using AnyCAD.Presentation;
 
 namespace StpViewer
 {
-    class StpBrower : AnyCAD.Platform.ITopoShapeReaderContext
+    class CADBrower : AnyCAD.Platform.TopoShapeReaderContext
     {
         private System.Windows.Forms.TreeView treeView = null;
         private AnyCAD.Presentation.RenderWindow3d renderView = null;
         private Stack<System.Windows.Forms.TreeNode> nodeStack = new Stack<System.Windows.Forms.TreeNode>();
         private int nShapeCount = 100;
-
-        public StpBrower(System.Windows.Forms.TreeView _treeView, AnyCAD.Presentation.RenderWindow3d _renderView)
+        private FaceStyle faceStyle;
+        private System.Collections.Generic.Dictionary<int, FaceStyle> faceStyleDict = new System.Collections.Generic.Dictionary<int, FaceStyle>();
+        public CADBrower(System.Windows.Forms.TreeView _treeView, AnyCAD.Presentation.RenderWindow3d _renderView)
         {
             treeView = _treeView;
             renderView = _renderView;
+            faceStyle = new FaceStyle();
+
+            System.Windows.Forms.TreeNode node = treeView.Nodes.Add("AnyCAD.net");
+            nodeStack.Push(node);
         }
 
-        public bool ReadFile(String fileName)
+        public override void OnSetFaceColor(ColorValue clr)
         {
-            AnyCAD.Exchange.StepReader reader = new AnyCAD.Exchange.StepReader();
-            return reader.Read(fileName, this);
+            if (clr.ToRGBA() == faceStyle.GetColor().ToRGBA())
+                return;
+
+            if (!faceStyleDict.TryGetValue(clr.ToRGBA(), out faceStyle))
+            {
+                faceStyle = new FaceStyle();
+                faceStyle.SetColor(clr);
+                faceStyleDict.Add(clr.ToRGBA(), faceStyle);
+            }
         }
 
         public override void OnBeginGroup(String name)
@@ -49,32 +61,23 @@ namespace StpViewer
             nodeStack.Pop();
         }
 
-        public override void OnCompound(TopoShape shape)
+        public override bool OnBeiginComplexShape(TopoShape shape)
         {
-            ++nShapeCount;
-            nodeStack.Peek().Nodes.Add(String.Format("{0}", nShapeCount), "Assembly");
-            renderView.ShowGeometry(shape, nShapeCount);
+            nodeStack.Push(nodeStack.Peek().Nodes.Add(String.Format("{0}", nShapeCount), "Shape"));
+            return true;
         }
 
-        public override void OnSolid(TopoShape shape)
+        public override void OnEndComplexShape()
         {
-            ++nShapeCount;
-            nodeStack.Peek().Nodes.Add(String.Format("{0}", nShapeCount), "Solid");
-            renderView.ShowGeometry(shape, nShapeCount);
-        }
-
-        public override void OnShell(TopoShape shape)
-        {
-            ++nShapeCount;
-            nodeStack.Peek().Nodes.Add(String.Format("{0}", nShapeCount), "Shell");
-            renderView.ShowGeometry(shape, nShapeCount);
+            nodeStack.Pop();
         }
 
         public override void OnFace(TopoShape shape)
         {
             ++nShapeCount;
             nodeStack.Peek().Nodes.Add(String.Format("{0}", nShapeCount), "Face");
-            renderView.ShowGeometry(shape, nShapeCount);
+            SceneNode node = renderView.ShowGeometry(shape, nShapeCount);
+            node.SetFaceStyle(faceStyle);
         }
     }
 }
