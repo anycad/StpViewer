@@ -18,8 +18,7 @@ namespace StpViewer
             InitializeComponent();
 
             this.renderView = new AnyCAD.Presentation.RenderWindow3d();
-            this.renderView.Location = new System.Drawing.Point(0, 0);
-            this.renderView.Size = this.Size;
+            this.renderView.Dock = DockStyle.Fill;
             this.renderView.TabIndex = 1;
             this.splitContainer1.Panel2.Controls.Add(this.renderView);
 
@@ -32,8 +31,7 @@ namespace StpViewer
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
-            if (renderView != null)
-                renderView.Size = this.splitContainer1.Panel2.Size;
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
