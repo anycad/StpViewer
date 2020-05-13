@@ -39,6 +39,8 @@ namespace StpViewer
             this.renderView.ShowCoordinateAxis(true);
             renderView.ExecuteCommand("ShadeWithEdgeMode");
             this.renderView.RequestDraw();
+
+            renderView.View3d.ShowCoordinateAxis(false);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -67,7 +69,7 @@ namespace StpViewer
         private void openIGESToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "STEP File(*.stp;*.step)|*.stp;*.step|All Files(*.*)|*.*";
+            dlg.Filter = "IGES File(*.iges;*.igs)|*.iges;*.igs";
 
             if (DialogResult.OK == dlg.ShowDialog())
             {
