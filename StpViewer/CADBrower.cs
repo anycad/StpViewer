@@ -15,13 +15,13 @@ namespace StpViewer
         private int nShapeCount = 100;
         private FaceStyle faceStyle;
         private System.Collections.Generic.Dictionary<int, FaceStyle> faceStyleDict = new System.Collections.Generic.Dictionary<int, FaceStyle>();
-        public CADBrower(System.Windows.Forms.TreeView _treeView, AnyCAD.Presentation.RenderWindow3d _renderView)
+        public CADBrower(String name, System.Windows.Forms.TreeView _treeView, AnyCAD.Presentation.RenderWindow3d _renderView)
         {
             treeView = _treeView;
             renderView = _renderView;
             faceStyle = new FaceStyle();
 
-            System.Windows.Forms.TreeNode node = treeView.Nodes.Add("AnyCAD.net");
+            System.Windows.Forms.TreeNode node = treeView.Nodes.Add(name);
             nodeStack.Push(node);
         }
 

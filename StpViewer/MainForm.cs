@@ -50,10 +50,7 @@ namespace StpViewer
 
             if (DialogResult.OK == dlg.ShowDialog())
             {
-                this.treeViewStp.Nodes.Clear();
-                this.renderView.ClearScene();
-
-                CADBrower browser = new CADBrower(this.treeViewStp, this.renderView);
+                CADBrower browser = new CADBrower(dlg.SafeFileName, this.treeViewStp, this.renderView);
                 AnyCAD.Exchange.StepReader reader = new AnyCAD.Exchange.StepReader();
                 reader.Read(dlg.FileName, browser);
             }
@@ -63,7 +60,7 @@ namespace StpViewer
 
         private void treeViewStp_AfterSelect(object sender, TreeViewEventArgs e)
         {
-           
+
         }
 
         private void openIGESToolStripMenuItem_Click(object sender, EventArgs e)
@@ -73,10 +70,7 @@ namespace StpViewer
 
             if (DialogResult.OK == dlg.ShowDialog())
             {
-                this.treeViewStp.Nodes.Clear();
-                this.renderView.ClearScene();
-
-                CADBrower browser = new CADBrower(this.treeViewStp, this.renderView);
+                CADBrower browser = new CADBrower(dlg.SafeFileName, this.treeViewStp, this.renderView);
                 AnyCAD.Exchange.IgesReader reader = new AnyCAD.Exchange.IgesReader();
                 reader.Read(dlg.FileName, browser);
             }
